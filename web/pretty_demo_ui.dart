@@ -5,10 +5,14 @@
 
 library pretty_demo_ui;
 
+import 'dart:convert' show JsonEncoder;
+
 import 'package:polymer/polymer.dart';
 import 'package:pretty_demo/tree.dart';
-import 'pretty_viewer.dart';
+import 'package:pretty_demo/json.dart';
 import 'package:pretty/pretty.dart';
+
+import 'pretty_viewer.dart';
 
 class NestDemo1 extends PrettyViewerConfig {
   @override final supportsReloading = false;
@@ -74,6 +78,35 @@ class TreeDemo extends PrettyViewerConfig {
   }
 }
 
+class JsonDemo extends PrettyViewerConfig {
+
+  @override generateDocument() => prettyJson(randomJson(20));
+
+  static final Document comma = text(", ") + line;
+
+  static Document between(String left, String right, Document doc) {
+    return (text(left) + (line + doc).nest(2) + line + text(right)).group;
+  }
+
+  static Document prettyJson(Object json) {
+    if (json is List) {
+      return between("[", "]", comma.join(json.map(prettyJson)));
+    } else if (json is Map) {
+      final children = [];
+      json.forEach((key, value) {
+        children.add(escape(key) + text(": ") + prettyJson(value));
+      });
+      return between("{", "}", comma.join(children));
+    } else {
+      return escape(json);
+    }
+  }
+
+  static Document escape(Object leaf) {
+    return text(const JsonEncoder().convert(leaf));
+  }
+}
+
 @CustomTag('pretty-demo-ui')
 class PrettyDemoUi extends PolymerElement {
 
@@ -84,4 +117,5 @@ class PrettyDemoUi extends PolymerElement {
   final groupConfig1 = new GroupDemo1();
   final groupConfig2 = new GroupDemo2();
   final treeConfig = new TreeDemo();
+  final jsonConfig = new JsonDemo();
 }
