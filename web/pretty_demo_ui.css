@@ -1,0 +1,37 @@
+/*
+Copyright (c) 2014, Google Inc. All rights reserved. Use of this source code
+is governed by a BSD-style license that can be found in the LICENSE file.
+
+Author: Paul Brauner (polux@google.com)
+*/
+
+:host {
+  width: 50%;
+  margin: 20px;
+  font-family: sans-serif;
+  display: block;
+}
+
+pretty-viewer {
+  margin-top: 20px;
+}
+
+#nest-demo-1 {
+  height: 150px;
+}
+
+#nest-demo-2 {
+  height: 150px;
+}
+
+#group-demo-1 {
+  height: 150px;
+}
+
+#group-demo-2 {
+  height: 150px;
+}
+
+#tree-demo {
+  height: 400px;
+}

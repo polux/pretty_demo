@@ -1,0 +1,32 @@
+<!-- 
+Copyright (c) 2014, Google Inc. All rights reserved. Use of this source code
+is governed by a BSD-style license that can be found in the LICENSE file.
+
+Author: Paul Brauner (polux@google.com)
+-->
+
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper_elements/paper_icon_button.html">
+<link rel="import" href="packages/paper_elements/paper_shadow.html">
+<link rel="import" href="packages/core_elements/core_icons.html">
+
+<polymer-element name="pretty-viewer">
+  <template>
+    <link rel="stylesheet" href="pretty_viewer.css">
+    <paper-shadow z="1"></paper-shadow>
+    <div id="text-area" flex vertical layout relative>
+      <div id="width-measurement">xxxxxxxxxxxxxxxxxxxx</div>
+      <div id="red-zone"></div>
+      <div id="vertical-line"></div>
+      <pre id="display" flex></pre>
+    </div>
+    <div id="bottom" horizontal layout center>
+      <paper-icon-button id="newtree" icon="refresh"></paper-icon-button>
+      <div id="width-label" flex><span id="width-text"></span> columns</div>
+      <paper-button label="−" id="minus"></paper-button>
+      <paper-button label="+" id="plus"></paper-button>
+    </div>
+  </template>
+  
+  <script type="application/dart" src="pretty_viewer.dart"></script>
+</polymer-element>

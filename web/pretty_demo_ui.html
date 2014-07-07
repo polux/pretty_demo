@@ -1,0 +1,24 @@
+<!-- 
+Copyright (c) 2014, Google Inc. All rights reserved. Use of this source code
+is governed by a BSD-style license that can be found in the LICENSE file.
+
+Author: Paul Brauner (polux@google.com)
+-->
+
+<link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="pretty_viewer.html">
+
+<polymer-element name="pretty-demo-ui">
+  <template>
+    <link rel="stylesheet" href="pretty_demo_ui.css">
+    
+    <h1>package:pretty</h1>
+    <pretty-viewer id="nest-demo-1" config={{nestConfig1}}></pretty-viewer>
+    <pretty-viewer id="nest-demo-2" config={{nestConfig2}}></pretty-viewer>
+    <pretty-viewer id="group-demo-1" config={{groupConfig1}}></pretty-viewer>
+    <pretty-viewer id="group-demo-2" config={{groupConfig2}}></pretty-viewer>
+    <pretty-viewer id="tree-demo" config={{treeConfig}}></pretty-viewer>
+  </template>
+  
+  <script type="application/dart" src="pretty_demo_ui.dart"></script>
+</polymer-element>
