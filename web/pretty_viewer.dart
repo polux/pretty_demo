@@ -10,6 +10,7 @@ import 'dart:html';
 import 'dart:math';
 import 'dart:async';
 import 'package:paper_elements/paper_button.dart';
+import 'package:paper_elements/paper_icon_button.dart';
 import 'package:pretty/pretty.dart' as P;
 
 abstract class PrettyViewerConfig {
@@ -29,7 +30,7 @@ class PrettyViewer extends PolymerElement {
   int width = 75;
 
   PreElement display;
-  PaperButton newTreeButton;
+  PaperIconButton newTreeButton;
   PaperButton plusButton;
   PaperButton minusButton;
   DivElement widthMeasurement;

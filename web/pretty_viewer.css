@@ -68,3 +68,7 @@ Author: Paul Brauner (polux@google.com)
   min-height: 44px;
   color: #555;
 }
+
+paper-button {
+  min-width: 2em;
+}

@@ -6,6 +6,7 @@ Author: Paul Brauner (polux@google.com)
 -->
 
 <link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper_elements/paper_button.html">
 <link rel="import" href="packages/paper_elements/paper_icon_button.html">
 <link rel="import" href="packages/paper_elements/paper_shadow.html">
 <link rel="import" href="packages/core_elements/core_icons.html">
@@ -23,8 +24,8 @@ Author: Paul Brauner (polux@google.com)
     <div id="bottom" horizontal layout center>
       <paper-icon-button id="newtree" icon="refresh"></paper-icon-button>
       <div id="width-label" flex><span id="width-text"></span> columns</div>
-      <paper-button label="−" id="minus"></paper-button>
-      <paper-button label="+" id="plus"></paper-button>
+      <paper-button id="minus">-</paper-button>
+      <paper-button id="plus">+</paper-button>
     </div>
   </template>
   
