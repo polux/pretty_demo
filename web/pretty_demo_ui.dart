@@ -6,6 +6,7 @@
 library pretty_demo_ui;
 
 import 'dart:convert' show JsonEncoder;
+import 'dart:js';
 
 import 'package:polymer/polymer.dart';
 import 'package:pretty_demo/tree.dart';
@@ -14,14 +15,23 @@ import 'package:pretty/pretty.dart';
 
 import 'pretty_viewer.dart';
 
+Document a = text("aaa");
+Document b = text("bbb");
+Document c = text("ccc");
+Document d = text("ddd");
+
+class PlusDemo extends PrettyViewerConfig {
+  @override final supportsReloading = false;
+
+  @override generateDocument() {
+    return a + empty + b + line + c;
+  }
+}
+
 class NestDemo1 extends PrettyViewerConfig {
   @override final supportsReloading = false;
 
   @override generateDocument() {
-    final a = text("aaa");
-    final b = text("bbb");
-    final c = text("ccc");
-    final d = text("ddd");
     return a + (line + b + line + c).nest(2) + line + d;
   }
 }
@@ -30,10 +40,6 @@ class NestDemo2 extends PrettyViewerConfig {
   @override final supportsReloading = false;
 
   @override generateDocument() {
-    final a = text("aaa");
-    final b = text("bbb");
-    final c = text("ccc");
-    final d = text("ddd");
     return a + (line + b + (line + c).nest(2) + line + d).nest(2);
   }
 }
@@ -42,10 +48,6 @@ class GroupDemo1 extends PrettyViewerConfig {
   @override final supportsReloading = false;
 
   @override generateDocument() {
-    final a = text("aaa");
-    final b = text("bbb");
-    final c = text("ccc");
-    final d = text("ddd");
     return (a + line + (b + line + c).group + line + d).group;
   }
 }
@@ -54,10 +56,6 @@ class GroupDemo2 extends PrettyViewerConfig {
   @override final supportsReloading = false;
 
   @override generateDocument() {
-    final a = text("aaa");
-    final b = text("bbb");
-    final c = text("ccc");
-    final d = text("ddd");
     return (a + (line + (b + line + c).group).nest(2) + line + d).group;
   }
 }
@@ -82,10 +80,10 @@ class JsonDemo extends PrettyViewerConfig {
 
   @override generateDocument() => prettyJson(randomJson(20));
 
-  static final Document comma = text(", ") + line;
+  static final Document comma = text(",") + line;
 
   static Document between(String left, String right, Document doc) {
-    return (text(left) + (line + doc).nest(2) + line + text(right)).group;
+    return (text(left) + (lineOr('') + doc).nest(2) + lineOr('') + text(right)).group;
   }
 
   static Document prettyJson(Object json) {
@@ -110,8 +108,18 @@ class JsonDemo extends PrettyViewerConfig {
 @CustomTag('pretty-demo-ui')
 class PrettyDemoUi extends PolymerElement {
 
-  PrettyDemoUi.created() : super.created();
+  PrettyDemoUi.created() : super.created() {}
 
+  @override ready() {
+    final hljs = context['hljs'];
+    for (final codeElement in shadowRoot.getElementsByTagName('code')) {
+      if (codeElement.classes.contains("dart")) {
+        hljs.callMethod('highlightBlock', [codeElement]);
+      }
+    }
+  }
+
+  final plusConfig = new PlusDemo();
   final nestConfig1 = new NestDemo1();
   final nestConfig2 = new NestDemo2();
   final groupConfig1 = new GroupDemo1();

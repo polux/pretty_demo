@@ -16,6 +16,12 @@ pretty-viewer {
   margin-top: 20px;
 }
 
+
+#plus-demo {
+  height: 100px;
+}
+
+
 #nest-demo-1 {
   height: 150px;
 }
@@ -38,4 +44,8 @@ pretty-viewer {
 
 #json-demo {
   height: 400px;
+}
+
+code {
+  background-color: #f0f0f0;
 }
