@@ -4,8 +4,7 @@ dependencies:
   enumerators: any
   paper_elements: any
   polymer: '>=0.15.1+3 <0.16.0'
-  pretty:
-    path: ../pretty
+  pretty: '>= 0.1.0 <0.2.0'
 transformers:
 - polymer:
     entry_points: web/pretty_demo.html
