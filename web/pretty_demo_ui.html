@@ -1,4 +1,4 @@
-<!-- 
+<!--
 Copyright (c) 2014, Google Inc. All rights reserved. Use of this source code
 is governed by a BSD-style license that can be found in the LICENSE file.
 
@@ -12,11 +12,11 @@ Author: Paul Brauner (polux@google.com)
   <template>
     <link rel="stylesheet" href="pretty_demo_ui.css">
     <link rel="stylesheet" href="highlight/styles/default.css">
-    
+
     <h1>package:pretty</h1>
     <p>
       The <code>pretty</code> package exports one class: <code>Document</code>.
-      A document can be seen as a set of different layouts for the same text. 
+      A document can be seen as a set of different layouts for the same text.
       Calling <code>render(n)</code> on a document picks
       the best of its layouts that fit in <code>n</code> columns.
     </p>
@@ -45,13 +45,13 @@ doc.group</code></pre>
       <li><code>doc.group</code> is <code>doc</code> where line breaks are allowed to render as <code>" "</code> instead</li>
     </ul>
     <p>
-      The rest of this document illustrates these forms with interactive 
-      examples of increasing complexity. 
+      The rest of this document illustrates these forms with interactive
+      examples of increasing complexity.
     </p>
-    
-    <h2>Preliminaries</h2> 
+
+    <h2>Preliminaries</h2>
     <p>
-      We start by defining four text documents that will be used throughout the 
+      We start by defining four text documents that will be used throughout the
       examples.
     </p>
     <pre><code class="dart">Document a = text("aaa");
@@ -59,20 +59,20 @@ Document b = text("bbb");
 Document c = text("ccc");
 Document d = text("ddd");</code></pre>
     <p>
-      Remember that <code>Document</code>s are immutable so it's safe to reuse 
-      them. For instance, we can can create a document that renders as 
+      Remember that <code>Document</code>s are immutable so it's safe to reuse
+      them. For instance, we can can create a document that renders as
       <code>"aaaaaa"</code> by concatenating <code>a</code> with itself.
     </p>
     <pre><code class="dart">a + a</code></pre>
-    
+
     <h2>Basic forms</h2>
     <p>
-      <code>text</code>, <code>empty</code>, <code>line</code> 
-      and <code>+</code> are pretty self-explanatory and don't need much 
-      introduction. Let's just note that <code>+</code> is associative, that 
-      <code>empty</code> is neutral for <code>+</code> and that 
-      <code>line</code> is equivalent to <code>text("\n")</code> as long as 
-      <code>nest</code> and <code>group</code> aren't involved. 
+      <code>text</code>, <code>empty</code>, <code>line</code>
+      and <code>+</code> are pretty self-explanatory and don't need much
+      introduction. Let's just note that <code>+</code> is associative, that
+      <code>empty</code> is neutral for <code>+</code> and that
+      <code>line</code> is equivalent to <code>text("\n")</code> as long as
+      <code>nest</code> and <code>group</code> aren't involved.
     </p>
     <p>As an example, here is a Dart expression using these combinators:</p>
     <code class="dart">a + empty + b + line + c</code>
@@ -81,26 +81,26 @@ Document d = text("ddd");</code></pre>
     <p>
       The red line can be moved to adjust the desired maximum number of columns
       but it won't have any effect on this document since it doesn't use
-      <code>group</code>. The + and - minus buttons change the font size. 
+      <code>group</code>. The + and - minus buttons change the font size.
     </p>
     <p>
-      Note that this document is equivalent to any parenthezising of the 
+      Note that this document is equivalent to any parenthezising of the
       original expression, e.g. <code>(a + empty) + (b + (line + c))</code>.
       It is also equivalent to <code>a + b + line + c</code>.
     </p>
-    
+
     <h2>Nesting</h2>
     <p>
-      The method <code>nest</code> indents all lines after a line break inside 
+      The method <code>nest</code> indents all lines after a line break inside
       the document it applies to. For instance the following document:
     </p>
     <code class="dart">a + (line + b + line + c).nest(2) + line + d</code>
     <p>
-      renders as follows: 
+      renders as follows:
     </p>
     <pretty-viewer id="nest-demo-1" config={{nestConfig1}}></pretty-viewer>
     <p>
-      Here, <code>nest</code> applies to the two occurrences of 
+      Here, <code>nest</code> applies to the two occurrences of
       <code>line</code>s inside the parenthesis, but not to the one outside,
       as is made clear by the structure of the expression. Note that the
       following document renders exactly the same:
@@ -108,10 +108,10 @@ Document d = text("ddd");</code></pre>
     <code class="dart">(a + line + b + line + c).nest(2) + line + d</code>
     <p>
       In both cases, <code>nest</code> only affects lines appearing
-      <i>after</i> a line break. 
+      <i>after</i> a line break.
     </p>
     <p>
-      Nesting is compositional: a document with a nested subdocument can in 
+      Nesting is compositional: a document with a nested subdocument can in
       turn be nested as part of a bigger document. For example the following
       document:
     </p>
@@ -122,14 +122,14 @@ Document d = text("ddd");</code></pre>
     <pretty-viewer id="nest-demo-2" config={{nestConfig2}}></pretty-viewer>
     <p>
       This document is still "static": the desired number of columns has no
-      effect on the rendering. Yet it demonstrate one interesting aspect of the 
+      effect on the rendering. Yet it demonstrate one interesting aspect of the
       library already: documents can be composed without having to worry
-      about any global indentation level. This makes it easy to write 
+      about any global indentation level. This makes it easy to write
       composable pretty-printing functions.
-    </p> 
+    </p>
     <h2>Grouping</h2>
     <p>
-    The method <code>group</code> is what makes documents "responsive": it 
+    The method <code>group</code> is what makes documents "responsive": it
     tells the renderer when it is OK to <i>not</i> render a <code>line</code> as
     a line break, but as a space instead. Depending on the available amount of
     horizontal space, the renderer will decide for each group whether it is
@@ -140,9 +140,9 @@ Document d = text("ddd");</code></pre>
     <p>renders as follows:</p>
     <pretty-viewer id="group-demo-1" config={{groupConfig1}}></pretty-viewer>
     <p>
-      Moving the red line with the mouse reveals the effect of 
-      <code>group</code>. As long as enough horizontal space is available, the 
-      outer group (and <i>a fortiori</i> the inner group) is flattened and all 
+      Moving the red line with the mouse reveals the effect of
+      <code>group</code>. As long as enough horizontal space is available, the
+      outer group (and <i>a fortiori</i> the inner group) is flattened and all
       occurrences of <code>line</code> are replaced by spaces. When less than 15
       columns are available, the outer group stops being flattened but the inner
       group still fits on one line. For 8 columns or less, all occurrences of
@@ -151,20 +151,20 @@ Document d = text("ddd");</code></pre>
     <p>
       Note that <code>group</code> integrates seamlessly with <code>nest</code>:
       flatten groups ignore nesting altogether since there is no line break.
-      Otherwise, nesting applies as usual. For instance the following 
+      Otherwise, nesting applies as usual. For instance the following
       expression:
     </p>
     <code class="dart">(a + (line + (b + line + c).group).nest(2) + line + d).group</code>
     <p>renders as follows:</p>
     <pretty-viewer id="group-demo-2" config={{groupConfig2}}></pretty-viewer>
     <p>
-      As long as 15 colums or more are available, the document renders as 
+      As long as 15 colums or more are available, the document renders as
       before. But as soon as the outer group breaks, the nesting becomes
       apparent.
     <h2>Pretty-Printing Trees</h2>
     <p>
-      Let us now apply the libtary to a full-fledged example: a pretty-printer 
-      of rose trees. We define trees as follows. 
+      Let us now apply the libtary to a full-fledged example: a pretty-printer
+      of rose trees. We define trees as follows.
     </p>
     <pre><code class="dart">class Tree {
   final String name;
@@ -185,17 +185,17 @@ Document d = text("ddd");</code></pre>
   return (text(tree.name) + prettyChildren).group;
 }</code></pre>
     <p>
-      If <code>tree</code> has no children then <code>prettyChildren</code> is 
-      the empty document. Otherwise it will have something to do with 
+      If <code>tree</code> has no children then <code>prettyChildren</code> is
+      the empty document. Otherwise it will have something to do with
       <code>prettyTree</code> mapped over <code>tree.children</code>:
     </p>
     <pre><code class="dart">final prettyChildren = tree.children.isEmpty
     ? empty
     : /* SOMETHING SOMETHING tree.children.map(prettyTree) */;</code></pre>
     <p>
-      In order to flesh out this something, we start by defining an auxiliary 
-      function that puts curly braces around a document and indents it by 2 
-      spaces. 
+      In order to flesh out this something, we start by defining an auxiliary
+      function that puts curly braces around a document and indents it by 2
+      spaces.
     </p>
     <pre><code class="dart">Document brackets(Document doc) {
   return (text(" {") + line + doc).nest(2) + line + text("}");
@@ -208,10 +208,10 @@ Document d = text("ddd");</code></pre>
     ? empty
     : brackets(/* tree.children.map(prettyTree) GLUED TOGETHER */);</code></pre>
     <p>
-      There is actually a facility method just for that in the 
-      <code>Document</code> class: <code>join</code>. 
+      There is actually a facility method just for that in the
+      <code>Document</code> class: <code>join</code>.
       The expression <code>doc.join([doc1, ..., docn])</code> is equivalent to
-      <code>doc1 + doc + ... + doc + docn</code>. In our case, we want to join 
+      <code>doc1 + doc + ... + doc + docn</code>. In our case, we want to join
       the prettified children with a comma followed by a line break.
     </p>
     <pre><code class="dart">final prettyChildren = tree.children.isEmpty
@@ -241,20 +241,20 @@ Document brackets(Document doc) {
       the pretty-printer of the previous section.
     </p>
     <p>
-      The only novelty is the usage of a not yet introduced function: 
-      <code>lineOr</code>. The expression <code>lineOr(str)</code> renders as 
-      <code>str</code> if there is enough horizontal space, as a line break 
-      otherwise. It is a generalisation of <code>line</code>, which is actually 
+      The only novelty is the usage of a not yet introduced function:
+      <code>lineOr</code>. The expression <code>lineOr(str)</code> renders as
+      <code>str</code> if there is enough horizontal space, as a line break
+      otherwise. It is a generalisation of <code>line</code>, which is actually
       a shortcut for <code>lineOr(" ")</code>. Since we want empty JSON objects
-      to render as <code>{}</code> and not as <code>{ }</code>, yet to break 
+      to render as <code>{}</code> and not as <code>{ }</code>, yet to break
       after the first brace if required, we use <code>lineOr("")</code>
       instead of <code>line</code>.
     </p>
-    
+
     <p>
       Other than that the code, reproduced below, is unsurprising.
     </p>
-    
+
     <pre><code class="dart">Document comma = text(",") + line;
 
 Document between(String left, String right, Document doc) {
@@ -282,7 +282,7 @@ Document escape(Object leaf) {
     <pretty-viewer id="json-demo" config={{jsonConfig}}></pretty-viewer>
     <p>That is all there is to the pretty library. Enjoy!</p>
   </template>
-  
+
   <script src="highlight/highlight.pack.js"></script>
   <script type="application/dart" src="pretty_demo_ui.dart"></script>
   <script src="packages/browser/dart.js"></script>
