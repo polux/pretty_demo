@@ -1,0 +1,74 @@
+/*
+Copyright (c) 2014, Google Inc. All rights reserved. Use of this source code
+is governed by a BSD-style license that can be found in the LICENSE file.
+
+Author: Paul Brauner (polux@google.com)
+*/
+
+:host {
+  padding: 10px 10px 0px 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+#text-area {
+  margin-top: 5px;
+  font-size: {{fontSizePx}}px;
+}
+
+#text-area pre {
+  height: 100%;
+  margin: 0px;
+  overflow: auto;
+  background-color: #f0f0f0;
+}
+
+#vertical-line {
+  position: absolute;
+  border-left: solid 1px #ff0000;
+  height: 100%;
+  width: 20px;
+  margin-left: -1px;
+}
+
+#vertical-line:hover {
+  cursor: move;
+}
+
+#red-zone {
+  position: absolute;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0.05);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+#result {
+  background-color: white;
+}
+
+#width-measurement {
+  font-family: monospace;
+  position: absolute;
+  visibility: hidden;
+  height: auto;
+  width: auto;
+  margin: 0px;
+  padding: 0px;
+}
+
+#newtree {
+  display: {{config.supportsReloading ? "" : "none"}};
+  fill: #555;
+  margin-right: 5px;
+}
+
+#bottom {
+  min-height: 44px;
+  color: #555;
+}
+
+paper-button {
+  min-width: 2em;
+}
