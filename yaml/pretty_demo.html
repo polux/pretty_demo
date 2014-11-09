@@ -2525,6 +2525,30 @@ Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiac
 }
 </style>
     
+    <pre><code class="dart">prettyStr(String str) {
+  final oneLine = text('"') + text(str) + text('"');
+  final multiLine =
+      (text("&gt;") + line + line.group.join(str.split(' ').map(text))).nest(2);
+  return oneLine | multiLine;
+}
+
+prettyList(List docs) {
+  final oneLine = text("[") + text(", ").join(docs) + text("]");
+  final bullet = line + text("- ");
+  final multiLine = (bullet + bullet.join(docs.map((d) =&gt; d.nest(2)))).nest(2);
+  return oneLine | multiLine;
+}
+
+final STR = "this is some moderately long string";
+
+final ITEMS = ["some long sentence with words",
+               "foo bar qux",
+               "some more words"].map(prettyStr).toList();
+
+final DOC = text("foo: ") + prettyStr(STR)
+          + line
+          + line
+          + text("bar: ") + prettyList(ITEMS);</code></pre>
     <pretty-viewer id="yaml-demo" config="{{yamlConfig}}"></pretty-viewer>
   </template>
   
